@@ -12,7 +12,7 @@ At the end of this task:
 
 1. An **odoo.com account** legally owned by **ABA Web Agency SRL** (Italian P.IVA), with Vergara as purchasing/billing user.
 2. A paid **Odoo Enterprise subscription — Custom plan, with Odoo.sh hosting included** — for the agreed number of internal users.
-3. An **Odoo.sh project** linked to the GitHub repo `IB2B/odoo-aba`, hosted in **Saint-Ghislain (EU)**, on the agreed Odoo version, with a **production** branch and one **staging** branch.
+3. An **Odoo.sh project** linked to the GitHub repo `eeyaay-dev/odoo-aba`, hosted in **Saint-Ghislain (EU)**, on the agreed Odoo version, with a **production** branch and one **staging** branch.
 4. The production database set to **Italy / Italian / Italian fiscal localization** (`l10n_it`).
 5. EEY AAY consultants added as **Odoo.sh collaborators** (Admin) and as **database administrators**.
 
@@ -36,7 +36,7 @@ Collect from ABA before purchasing (see §5):
 Access needed by EEY AAY:
 - A nominal email per consultant (no shared login).
 - A **GitHub account** per consultant (Odoo.sh login = GitHub).
-- Admin rights on the GitHub repo `IB2B/odoo-aba` for whoever creates the Odoo.sh project.
+- Admin rights on the GitHub repo `eeyaay-dev/odoo-aba` for whoever creates the Odoo.sh project.
 
 ---
 
@@ -62,8 +62,8 @@ Access needed by EEY AAY:
 4. Send the **subscription code** to the EEY AAY lead via the secure channel (Task 6) — needed to create the Odoo.sh project.
 
 ### Step 4 — Create the Odoo.sh project (EEY AAY lead)
-1. Go to https://www.odoo.sh/project/new, sign in with GitHub, authorize the Odoo.sh app (incl. access to the `IB2B` organization).
-2. Repository: select existing **`IB2B/odoo-aba`**.
+1. Go to https://www.odoo.sh/project/new, sign in with GitHub, authorize the Odoo.sh app (incl. access to the `eeyaay-dev` organization).
+2. Repository: select existing **`eeyaay-dev/odoo-aba`**.
 3. Odoo version: **19.0 or 20.0** as agreed (check what the picker offers).
 4. Subscription code: paste ABA's code.
 5. Hosting location: **Saint-Ghislain (Europe)** — ⚠️ cannot be changed later.
@@ -99,7 +99,7 @@ Flag IAP credit needs (SMS, Partner Autocomplete, document digitization, WhatsAp
 
 - [ ] https://www.odoo.com/my/subscriptions (as Vergara) shows the subscription **In Progress**, Custom plan, correct users, **Odoo.sh included**.
 - [ ] Subscription invoice issued to ABA Web Agency SRL with P.IVA (PDF archived).
-- [ ] Odoo.sh project exists, linked to `IB2B/odoo-aba`, region **Saint-Ghislain**, correct version; Production build is green.
+- [ ] Odoo.sh project exists, linked to `eeyaay-dev/odoo-aba`, region **Saint-Ghislain**, correct version; Production build is green.
 - [ ] A `staging` branch exists in the Staging stage and builds green.
 - [ ] Production DB: no trial/expiry banner; *Settings ▸ Odoo Subscription* shows valid expiration.
 - [ ] Company = ABA Web Agency SRL, Country Italy, P.IVA filled, fiscal localization Italy.
@@ -117,6 +117,6 @@ Flag IAP credit needs (SMS, Partner Autocomplete, document digitization, WhatsAp
 5. Billing: monthly/annual; start date (Odoo.sh trial projects revert to development after 30 days — buy before real configuration starts).
 6. Legal data: full name, address, P.IVA / CF, SDI / PEC.
 7. Account ownership: ABA email owning odoo.com account; who holds 2FA recovery codes.
-8. **GitHub repo ownership**: the code lives in `IB2B/odoo-aba`. Decide whether it stays with IB2B / EEY AAY or is transferred to an ABA GitHub organization (affects who controls the Odoo.sh project if the partnership ends).
+8. **GitHub repo ownership**: the code lives in `eeyaay-dev/odoo-aba`. Decide whether it stays with EEY AAY or is transferred to an ABA GitHub organization (affects who controls the Odoo.sh project if the partnership ends).
 9. EEY AAY users: included in licence count? Archived at go-live?
 10. IAP services (SMS, WhatsApp, autocomplete, digitization, AI): budget prepaid credits.
