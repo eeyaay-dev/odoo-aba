@@ -5,6 +5,7 @@ Code version of everything configured by hand in the ABA database during Phase 0
 
 | File | What it sets | Task |
 |---|---|---|
+| `data/res_lang_data.xml` | Activates Italian first (users and contacts below use `it_IT`) | P1·4 |
 | `data/res_company_data.xml` | Company identity, Italian e-invoicing fields, logo, document layout + footer, Italian as default contact language | P1·4, P1·5 |
 | `data/mail_data.xml` | Alias domain `abawebagency.com` (bounce / catchall / notifications), catchall domain, from filter | P0·4 |
 | `data/settings_data.xml` | 2FA for employees, sign-up on invitation, Google sign-in, Google Calendar client ID | P1·2, P1·3, P1·7 |

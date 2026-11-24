@@ -45,6 +45,7 @@ See README.md before installing it on a database that already has this setup.
         "project_mail_plugin",
     ],
     "data": [
+        "data/res_lang_data.xml",
         "data/res_company_data.xml",
         "data/mail_data.xml",
         "data/settings_data.xml",

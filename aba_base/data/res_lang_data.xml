@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- Italian must be active BEFORE any record uses lang="it_IT" (partners, users,
+         the default contact language). On a fresh database only en_US is active.
+         Translations are loaded later, in post_init_hook. -->
+    <function model="res.lang" name="_activate_lang" eval="['it_IT']"/>
+
+</odoo>

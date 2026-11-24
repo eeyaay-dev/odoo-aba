@@ -6,7 +6,8 @@ _logger = logging.getLogger(__name__)
 def post_init_hook(env):
     """Things that can't be plain XML data.
 
-    1. Italian language active + translations loaded for every installed module.
+    1. Italian translations loaded for every installed module (the language itself
+       is activated first thing in data/res_lang_data.xml).
     2. Italian chart of accounts, when the company doesn't have it yet. On a fresh
        database with demo data the generic chart already has entries and Odoo
        refuses to switch: we log it and move on instead of failing the install.
