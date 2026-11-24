@@ -28,23 +28,21 @@
     <record id="channel_direzione" model="discuss.channel">
         <field name="name">direzione</field>
         <field name="channel_type">channel</field>
-        <field name="description">Direzione</field>
+        <field name="description">direzione</field>
         <field name="group_public_id" ref="base.group_system"/>
         <field name="group_ids" eval="[Command.set([ref('base.group_system')])]"/>
     </record>
 
-    <!-- amministrazione: members by hand. Authorized = Role / Administrator, so only
-         full-access users can be members. Alessia (HR, not administrator) was in the
-         plan but can't join while this group is set: decide with ABA. -->
+    <!-- amministrazione: members by hand (Andrea, Francesco), added in post_init_hook
+         so an existing member never makes the install fail. Authorized = Role /
+         Administrator, so only full-access users can join. Alessia (HR, not
+         administrator) was in the plan but can't join while this group is set:
+         decide with ABA. -->
     <record id="channel_amministrazione" model="discuss.channel">
         <field name="name">amministrazione</field>
         <field name="channel_type">channel</field>
         <field name="description">Fatture, pagamenti, fornitori</field>
         <field name="group_public_id" ref="base.group_system"/>
-        <field name="channel_member_ids" eval="[
-            Command.create({'partner_id': ref('partner_andrea_basile')}),
-            Command.create({'partner_id': ref('partner_francesco_vergara')}),
-        ]"/>
     </record>
 
 </odoo>

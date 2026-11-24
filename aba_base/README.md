@@ -14,7 +14,7 @@ Code version of everything configured by hand in the ABA database during Phase 0
 | `data/discuss_channel_data.xml` | `generale`, `commerciale`, `progetti`, `direzione`, `amministrazione` | P1·8 |
 | `data/appointment_data.xml` | Booking page *Call Conoscitiva – ABA Web Agency* | P1·7 |
 | `data/ir_filters_data.xml` | Admin favourite *Cronologia modifiche* | P1·10 |
-| `hooks.py` | Italian language + translations, Italian chart of accounts on a fresh database | P1·4 |
+| `hooks.py` | Before install: link existing records (no duplicates). After install: Italian translations, `amministrazione` members, Italian chart of accounts on a fresh database | P1·4, P1·8 |
 
 ## Not in the module (on purpose)
 
@@ -28,10 +28,13 @@ Code version of everything configured by hand in the ABA database during Phase 0
 
 - **Fresh database (development branch):** installs everything. Demo data stays; the Italian
   chart is only loaded if the database has no accounting entries yet (logged otherwise).
-- **Production / staging:** do **not** install as is — the records already exist without an
-  external ID, so the module would create duplicates (users, channels, booking page…).
-  First link the existing records to this module's IDs (`ir.model.data`, `noupdate=True`),
-  then install. Installing rewrites the linked records with the values in these files.
+- **Production / staging:** the setup already exists there without external IDs. The
+  `pre_init_hook` links it before the data files load (users by login, their partners,
+  channels by name, alias domain, booking page, filter), so installing **updates** the
+  existing records instead of duplicating them. The linked records are rewritten with the
+  values in these files — they match production as of 24/11/2026 (checked against a
+  read-only comparison), except `amministrazione`, which gains Andrea and Francesco.
+  Test on **staging** first (Apps ▸ install `aba_base`), then production.
 
 All data files are `noupdate="1"`: after installation, changes made in the UI are kept on
 module upgrades.

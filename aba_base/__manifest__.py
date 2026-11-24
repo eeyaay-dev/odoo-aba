@@ -55,6 +55,7 @@ See README.md before installing it on a database that already has this setup.
         "data/appointment_data.xml",
         "data/ir_filters_data.xml",
     ],
+    "pre_init_hook": "pre_init_hook",
     "post_init_hook": "post_init_hook",
     "installable": True,
     "application": False,
