@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- Change history view for the admin (Phase 1 task 10):
+         Settings ▸ Technical ▸ Messages ▸ Favorites ▸ "Cronologia modifiche". -->
+    <record id="filter_cronologia_modifiche" model="ir.filters">
+        <field name="name">Cronologia modifiche</field>
+        <field name="model_id">mail.message</field>
+        <field name="domain">[("tracking_value_ids", "!=", False)]</field>
+        <field name="context">{'group_by': ['model']}</field>
+        <field name="user_ids" eval="[Command.set([ref('base.user_admin')])]"/>
+    </record>
+
+</odoo>

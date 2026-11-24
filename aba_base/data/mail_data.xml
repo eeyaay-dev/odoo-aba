@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- Outbound email through Odoo's own mail servers, sending as @abawebagency.com
+         (Phase 0 task 4). Replies come back through the catchall@ / bounce@ Google Groups,
+         which forward to <alias>@eeyaay-dev-odoo-aba.odoo.com. -->
+    <record id="alias_domain_abawebagency" model="mail.alias.domain">
+        <field name="name">abawebagency.com</field>
+        <field name="bounce_alias">bounce</field>
+        <field name="catchall_alias">catchall</field>
+        <field name="default_from">notifications</field>
+    </record>
+
+    <record id="base.main_company" model="res.company">
+        <field name="alias_domain_id" ref="alias_domain_abawebagency"/>
+    </record>
+
+    <function model="ir.config_parameter" name="set_param" eval="('mail.catchall.domain', 'abawebagency.com')"/>
+    <function model="ir.config_parameter" name="set_param" eval="('mail.default.from_filter', 'abawebagency.com')"/>
+
+</odoo>

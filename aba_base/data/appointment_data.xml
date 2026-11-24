@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- Booking page for sales discovery calls (Phase 1 task 7). Internal use only:
+         Fedele books for the prospect, Rocco takes the call (or hands it to Luca).
+         Not published. Every booking creates an opportunity. -->
+    <record id="appointment_call_conoscitiva" model="appointment.type">
+        <field name="name">Call Conoscitiva – ABA Web Agency</field>
+        <field name="appointment_tz">Europe/Rome</field>
+        <field name="appointment_duration">1.0</field>
+        <field name="slot_creation_interval">1.0</field>
+        <field name="schedule_based_on">users</field>
+        <field name="staff_user_ids" eval="[Command.set([ref('user_rocco_accogli')])]"/>
+        <field name="event_videocall_source">discuss</field>
+        <field name="auto_confirm" eval="True"/>
+        <field name="allow_guests" eval="True"/>
+        <field name="min_schedule_hours">1.0</field>
+        <field name="max_schedule_days">30</field>
+        <field name="min_cancellation_hours">1.0</field>
+        <field name="lead_create" eval="True"/>
+        <field name="reminder_ids" eval="[Command.set([ref('calendar.alarm_mail_1'), ref('appointment_sms.calendar_alarm_data_1h_sms')])]"/>
+        <field name="question_ids" eval="[Command.clear(), Command.create({'name': 'Describe what you need', 'question_type': 'text', 'sequence': 0})]"/>
+        <!-- Mon–Fri 09:00–20:00, Sat 09:00–14:00 -->
+        <field name="slot_ids" eval="[Command.clear(),
+            Command.create({'weekday': '1', 'start_hour': 9.0, 'end_hour': 20.0}),
+            Command.create({'weekday': '2', 'start_hour': 9.0, 'end_hour': 20.0}),
+            Command.create({'weekday': '3', 'start_hour': 9.0, 'end_hour': 20.0}),
+            Command.create({'weekday': '4', 'start_hour': 9.0, 'end_hour': 20.0}),
+            Command.create({'weekday': '5', 'start_hour': 9.0, 'end_hour': 20.0}),
+            Command.create({'weekday': '6', 'start_hour': 9.0, 'end_hour': 14.0}),
+        ]"/>
+    </record>
+
+</odoo>

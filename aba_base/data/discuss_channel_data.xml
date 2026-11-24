@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- Internal chat moves from WhatsApp groups to Discuss (Phase 1 task 8).
+         group_ids       = Auto Subscribe (members of the group join automatically)
+         group_public_id = Authorized group (only that group can see the channel) -->
+
+    <record id="mail.channel_all_employees" model="discuss.channel">
+        <field name="name">generale</field>
+    </record>
+
+    <record id="channel_commerciale" model="discuss.channel">
+        <field name="name">commerciale</field>
+        <field name="channel_type">channel</field>
+        <field name="description">Coordinamento commerciale e CRM</field>
+        <field name="group_public_id" ref="sales_team.group_sale_salesman"/>
+        <field name="group_ids" eval="[Command.set([ref('sales_team.group_sale_salesman')])]"/>
+    </record>
+
+    <record id="channel_progetti" model="discuss.channel">
+        <field name="name">progetti</field>
+        <field name="channel_type">channel</field>
+        <field name="description">Coordinamento progetti e consegne</field>
+        <field name="group_public_id" ref="base.group_user"/>
+        <field name="group_ids" eval="[Command.set([ref('project.group_project_user')])]"/>
+    </record>
+
+    <record id="channel_direzione" model="discuss.channel">
+        <field name="name">direzione</field>
+        <field name="channel_type">channel</field>
+        <field name="description">Direzione</field>
+        <field name="group_public_id" ref="base.group_system"/>
+        <field name="group_ids" eval="[Command.set([ref('base.group_system')])]"/>
+    </record>
+
+    <!-- amministrazione: members by hand. Authorized = Role / Administrator, so only
+         full-access users can be members. Alessia (HR, not administrator) was in the
+         plan but can't join while this group is set: decide with ABA. -->
+    <record id="channel_amministrazione" model="discuss.channel">
+        <field name="name">amministrazione</field>
+        <field name="channel_type">channel</field>
+        <field name="description">Fatture, pagamenti, fornitori</field>
+        <field name="group_public_id" ref="base.group_system"/>
+        <field name="channel_member_ids" eval="[
+            Command.create({'partner_id': ref('partner_andrea_basile')}),
+            Command.create({'partner_id': ref('partner_francesco_vergara')}),
+        ]"/>
+    </record>
+
+</odoo>

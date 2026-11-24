@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- Sales team: emails to leads@abawebagency.com create an opportunity (Phase 1 task 6).
+         leads@ is a Google Group forwarding to leads@eeyaay-dev-odoo-aba.odoo.com. -->
+    <record id="sales_team.team_sales_department" model="crm.team">
+        <field name="alias_name">leads</field>
+        <field name="alias_contact">everyone</field>
+        <field name="user_id" ref="user_rocco_accogli"/>
+        <field name="member_ids" eval="[Command.set([ref('user_rocco_accogli'), ref('user_fedele_basile'), ref('user_luca_luretti')])]"/>
+    </record>
+
+</odoo>

@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- 21 ABA users from the "21 ACCOUNT" sheet (Phase 1 task 1), roles as in production on 24/11/2026.
+         One partner per user (so channels can reference them) + an employee (create_employee).
+         No password: users join through the invitation email / Google sign-in.
+         no_reset_password: installing the module must NOT send invitations. -->
+
+    <!-- ===== Full access — Role Administrator + every app Administrator ===== -->
+    <record id="partner_andrea_basile" model="res.partner">
+        <field name="name">Andrea Basile</field>
+        <field name="email">andrea.basile@abawebagency.com</field>
+        <field name="lang">it_IT</field>
+        <field name="tz">Europe/Rome</field>
+    </record>
+    <record id="user_andrea_basile" model="res.users" context="{'no_reset_password': True}">
+        <field name="login">andrea.basile@abawebagency.com</field>
+        <field name="partner_id" ref="partner_andrea_basile"/>
+        <field name="create_employee" eval="True"/>
+        <field name="group_ids" eval="[Command.set([ref('account.group_account_manager'), ref('base.group_system'), ref('hr.group_hr_manager'), ref('hr_holidays.group_hr_holidays_manager'), ref('hr_timesheet.group_timesheet_manager'), ref('mail.group_mail_notification_type_inbox'), ref('project.group_project_manager'), ref('sales_team.group_sale_manager'), ref('spreadsheet_dashboard.group_dashboard_manager')])]"/>
+    </record>
+
+    <record id="partner_francesco_vergara" model="res.partner">
+        <field name="name">Francesco Vergara</field>
+        <field name="email">amministrazione@abawebagency.com</field>
+        <field name="lang">it_IT</field>
+        <field name="tz">Europe/Rome</field>
+    </record>
+    <record id="user_francesco_vergara" model="res.users" context="{'no_reset_password': True}">
+        <field name="login">amministrazione@abawebagency.com</field>
+        <field name="partner_id" ref="partner_francesco_vergara"/>
+        <field name="create_employee" eval="True"/>
+        <field name="group_ids" eval="[Command.set([ref('account.group_account_manager'), ref('base.group_system'), ref('hr.group_hr_manager'), ref('hr_holidays.group_hr_holidays_manager'), ref('hr_timesheet.group_timesheet_manager'), ref('mail.group_mail_notification_type_inbox'), ref('project.group_project_manager'), ref('sales_team.group_sale_manager'), ref('spreadsheet_dashboard.group_dashboard_manager')])]"/>
+    </record>
+
+    <record id="partner_pietro_annicchiarico" model="res.partner">
+        <field name="name">Pietro Annicchiarico</field>
+        <field name="email">pietro.annicchiarico@abawebagency.com</field>
+        <field name="lang">it_IT</field>
+        <field name="tz">Europe/Rome</field>
+    </record>
+    <record id="user_pietro_annicchiarico" model="res.users" context="{'no_reset_password': True}">
+        <field name="login">pietro.annicchiarico@abawebagency.com</field>
+        <field name="partner_id" ref="partner_pietro_annicchiarico"/>
+        <field name="create_employee" eval="True"/>
+        <field name="group_ids" eval="[Command.set([ref('account.group_account_manager'), ref('base.group_system'), ref('hr.group_hr_manager'), ref('hr_holidays.group_hr_holidays_manager'), ref('hr_timesheet.group_timesheet_manager'), ref('mail.group_mail_notification_type_inbox'), ref('project.group_project_manager'), ref('sales_team.group_sale_manager'), ref('spreadsheet_dashboard.group_dashboard_manager')])]"/>
+    </record>
+
+    <record id="partner_antonio_oliva" model="res.partner">
+        <field name="name">Antonio Oliva</field>
+        <field name="email">antonio.oliva@abawebagency.com</field>
+        <field name="lang">it_IT</field>
+        <field name="tz">Europe/Rome</field>
+    </record>
+    <record id="user_antonio_oliva" model="res.users" context="{'no_reset_password': True}">
+        <field name="login">antonio.oliva@abawebagency.com</field>
+        <field name="partner_id" ref="partner_antonio_oliva"/>
+        <field name="create_employee" eval="True"/>
+        <field name="group_ids" eval="[Command.set([ref('account.group_account_manager'), ref('base.group_system'), ref('hr.group_hr_manager'), ref('hr_holidays.group_hr_holidays_manager'), ref('hr_timesheet.group_timesheet_manager'), ref('mail.group_mail_notification_type_inbox'), ref('project.group_project_manager'), ref('sales_team.group_sale_manager'), ref('spreadsheet_dashboard.group_dashboard_manager')])]"/>
+    </record>
+
+    <!-- ===== HR ===== -->
+    <record id="partner_alessia_polignano" model="res.partner">
+        <field name="name">Alessia Polignano</field>
+        <field name="email">hr@abawebagency.com</field>
+        <field name="lang">it_IT</field>
+        <field name="tz">Europe/Rome</field>
+    </record>
+    <record id="user_alessia_polignano" model="res.users" context="{'no_reset_password': True}">
+        <field name="login">hr@abawebagency.com</field>
+        <field name="partner_id" ref="partner_alessia_polignano"/>
+        <field name="create_employee" eval="True"/>
+        <field name="group_ids" eval="[Command.set([ref('base.group_user'), ref('hr.group_hr_manager'), ref('hr_holidays.group_hr_holidays_manager'), ref('mail.group_mail_notification_type_inbox')])]"/>
+    </record>
+
+    <!-- ===== Sales director ===== -->
+    <record id="partner_rocco_accogli" model="res.partner">
+        <field name="name">Rocco Accogli</field>
+        <field name="email">commerciale@abawebagency.com</field>
+        <field name="lang">it_IT</field>
+        <field name="tz">Europe/Rome</field>
+    </record>
+    <record id="user_rocco_accogli" model="res.users" context="{'no_reset_password': True}">
+        <field name="login">commerciale@abawebagency.com</field>
+        <field name="partner_id" ref="partner_rocco_accogli"/>
+        <field name="create_employee" eval="True"/>
+        <field name="group_ids" eval="[Command.set([ref('account.group_account_invoice'), ref('base.group_user'), ref('mail.group_mail_notification_type_inbox'), ref('sales_team.group_sale_manager')])]"/>
+    </record>
+
+    <!-- ===== Sales ===== -->
+    <record id="partner_fedele_basile" model="res.partner">
+        <field name="name">Fedele Basile</field>
+        <field name="email">info@abawebagency.com</field>
+        <field name="lang">it_IT</field>
+        <field name="tz">Europe/Rome</field>
+    </record>
+    <record id="user_fedele_basile" model="res.users" context="{'no_reset_password': True}">
+        <field name="login">info@abawebagency.com</field>
+        <field name="partner_id" ref="partner_fedele_basile"/>
+        <field name="create_employee" eval="True"/>
+        <field name="group_ids" eval="[Command.set([ref('account.group_account_invoice'), ref('base.group_user'), ref('mail.group_mail_notification_type_inbox'), ref('sales_team.group_sale_salesman_all_leads')])]"/>
+    </record>
+
+    <record id="partner_luca_luretti" model="res.partner">
+        <field name="name">Luca Luretti</field>
+        <field name="email">luca.luretti@abawebagency.com</field>
+        <field name="lang">it_IT</field>
+        <field name="tz">Europe/Rome</field>
+    </record>
+    <record id="user_luca_luretti" model="res.users" context="{'no_reset_password': True}">
+        <field name="login">luca.luretti@abawebagency.com</field>
+        <field name="partner_id" ref="partner_luca_luretti"/>
+        <field name="create_employee" eval="True"/>
+        <field name="group_ids" eval="[Command.set([ref('account.group_account_invoice'), ref('base.group_user'), ref('mail.group_mail_notification_type_inbox'), ref('sales_team.group_sale_salesman_all_leads')])]"/>
+    </record>
+
+    <!-- ===== Operational — Project user, own timesheets only ===== -->
+    <record id="partner_advertiser" model="res.partner">
+        <field name="name">Advertiser</field>
+        <field name="email">advertising@abawebagency.com</field>
+        <field name="lang">it_IT</field>
+        <field name="tz">Europe/Rome</field>
+    </record>
+    <record id="user_advertiser" model="res.users" context="{'no_reset_password': True}">
+        <field name="login">advertising@abawebagency.com</field>
+        <field name="partner_id" ref="partner_advertiser"/>
+        <field name="create_employee" eval="True"/>
+        <field name="group_ids" eval="[Command.set([ref('base.group_user'), ref('hr_timesheet.group_hr_timesheet_user'), ref('mail.group_mail_notification_type_inbox'), ref('project.group_project_user')])]"/>
+    </record>
+
+    <record id="partner_annapia_capece" model="res.partner">
+        <field name="name">Annapia Capece</field>
+        <field name="email">annapia.capece@abawebagency.com</field>
+        <field name="lang">it_IT</field>
+        <field name="tz">Europe/Rome</field>
+    </record>
+    <record id="user_annapia_capece" model="res.users" context="{'no_reset_password': True}">
+        <field name="login">annapia.capece@abawebagency.com</field>
+        <field name="partner_id" ref="partner_annapia_capece"/>
+        <field name="create_employee" eval="True"/>
+        <field name="group_ids" eval="[Command.set([ref('base.group_user'), ref('hr_timesheet.group_hr_timesheet_user'), ref('mail.group_mail_notification_type_inbox'), ref('project.group_project_user')])]"/>
+    </record>
+
+    <record id="partner_carlo_cazzato" model="res.partner">
+        <field name="name">Carlo Cazzato</field>
+        <field name="email">carlo.cazzato@abawebagency.com</field>
+        <field name="lang">it_IT</field>
+        <field name="tz">Europe/Rome</field>
+    </record>
+    <record id="user_carlo_cazzato" model="res.users" context="{'no_reset_password': True}">
+        <field name="login">carlo.cazzato@abawebagency.com</field>
+        <field name="partner_id" ref="partner_carlo_cazzato"/>
+        <field name="create_employee" eval="True"/>
+        <field name="group_ids" eval="[Command.set([ref('base.group_user'), ref('hr_timesheet.group_hr_timesheet_user'), ref('mail.group_mail_notification_type_inbox'), ref('project.group_project_user')])]"/>
+    </record>
+
+    <record id="partner_dario_bruno" model="res.partner">
+        <field name="name">Dario Bruno</field>
+        <field name="email">dario.bruno@abawebagency.com</field>
+        <field name="lang">it_IT</field>
+        <field name="tz">Europe/Rome</field>
+    </record>
+    <record id="user_dario_bruno" model="res.users" context="{'no_reset_password': True}">
+        <field name="login">dario.bruno@abawebagency.com</field>
+        <field name="partner_id" ref="partner_dario_bruno"/>
+        <field name="create_employee" eval="True"/>
+        <field name="group_ids" eval="[Command.set([ref('base.group_user'), ref('hr_timesheet.group_hr_timesheet_user'), ref('mail.group_mail_notification_type_inbox'), ref('project.group_project_user')])]"/>
+    </record>
+
+    <record id="partner_denise_marturano" model="res.partner">
+        <field name="name">Denise Marturano</field>
+        <field name="email">denise.marturano@abawebagency.com</field>
+        <field name="lang">it_IT</field>
+        <field name="tz">Europe/Rome</field>
+    </record>
+    <record id="user_denise_marturano" model="res.users" context="{'no_reset_password': True}">
+        <field name="login">denise.marturano@abawebagency.com</field>
+        <field name="partner_id" ref="partner_denise_marturano"/>
+        <field name="create_employee" eval="True"/>
+        <field name="group_ids" eval="[Command.set([ref('base.group_user'), ref('hr_timesheet.group_hr_timesheet_user'), ref('mail.group_mail_notification_type_inbox'), ref('project.group_project_user')])]"/>
+    </record>
+
+    <record id="partner_jessica_de_giovanni" model="res.partner">
+        <field name="name">Jessica De Giovanni</field>
+        <field name="email">jessica.degiovanni@abawebagency.com</field>
+        <field name="lang">it_IT</field>
+        <field name="tz">Europe/Rome</field>
+    </record>
+    <record id="user_jessica_de_giovanni" model="res.users" context="{'no_reset_password': True}">
+        <field name="login">jessica.degiovanni@abawebagency.com</field>
+        <field name="partner_id" ref="partner_jessica_de_giovanni"/>
+        <field name="create_employee" eval="True"/>
+        <field name="group_ids" eval="[Command.set([ref('base.group_user'), ref('hr_timesheet.group_hr_timesheet_user'), ref('mail.group_mail_notification_type_inbox'), ref('project.group_project_user')])]"/>
+    </record>
+
+    <record id="partner_marco_carrano" model="res.partner">
+        <field name="name">Marco Carrano</field>
+        <field name="email">marco.carrano@abawebagency.com</field>
+        <field name="lang">it_IT</field>
+        <field name="tz">Europe/Rome</field>
+    </record>
+    <record id="user_marco_carrano" model="res.users" context="{'no_reset_password': True}">
+        <field name="login">marco.carrano@abawebagency.com</field>
+        <field name="partner_id" ref="partner_marco_carrano"/>
+        <field name="create_employee" eval="True"/>
+        <field name="group_ids" eval="[Command.set([ref('base.group_user'), ref('hr_timesheet.group_hr_timesheet_user'), ref('mail.group_mail_notification_type_inbox'), ref('project.group_project_user')])]"/>
+    </record>
+
+    <record id="partner_margherita_tegas" model="res.partner">
+        <field name="name">Margherita Tegas</field>
+        <field name="email">margherita.tegas@abawebagency.com</field>
+        <field name="lang">it_IT</field>
+        <field name="tz">Europe/Rome</field>
+    </record>
+    <record id="user_margherita_tegas" model="res.users" context="{'no_reset_password': True}">
+        <field name="login">margherita.tegas@abawebagency.com</field>
+        <field name="partner_id" ref="partner_margherita_tegas"/>
+        <field name="create_employee" eval="True"/>
+        <field name="group_ids" eval="[Command.set([ref('base.group_user'), ref('hr_timesheet.group_hr_timesheet_user'), ref('mail.group_mail_notification_type_inbox'), ref('project.group_project_user')])]"/>
+    </record>
+
+    <record id="partner_mattia_di_serio" model="res.partner">
+        <field name="name">Mattia Di Serio</field>
+        <field name="email">mattia.diserio@abawebagency.com</field>
+        <field name="lang">it_IT</field>
+        <field name="tz">Europe/Rome</field>
+    </record>
+    <record id="user_mattia_di_serio" model="res.users" context="{'no_reset_password': True}">
+        <field name="login">mattia.diserio@abawebagency.com</field>
+        <field name="partner_id" ref="partner_mattia_di_serio"/>
+        <field name="create_employee" eval="True"/>
+        <field name="group_ids" eval="[Command.set([ref('base.group_user'), ref('hr_timesheet.group_hr_timesheet_user'), ref('mail.group_mail_notification_type_inbox'), ref('project.group_project_user')])]"/>
+    </record>
+
+    <record id="partner_raffaele_dandria" model="res.partner">
+        <field name="name">Raffaele D’Andria</field>
+        <field name="email">raffaele.dandria@abawebagency.com</field>
+        <field name="lang">it_IT</field>
+        <field name="tz">Europe/Rome</field>
+    </record>
+    <record id="user_raffaele_dandria" model="res.users" context="{'no_reset_password': True}">
+        <field name="login">raffaele.dandria@abawebagency.com</field>
+        <field name="partner_id" ref="partner_raffaele_dandria"/>
+        <field name="create_employee" eval="True"/>
+        <field name="group_ids" eval="[Command.set([ref('base.group_user'), ref('hr_timesheet.group_hr_timesheet_user'), ref('mail.group_mail_notification_type_inbox'), ref('project.group_project_user')])]"/>
+    </record>
+
+    <record id="partner_salvatore_sabato" model="res.partner">
+        <field name="name">Salvatore Sabato</field>
+        <field name="email">salvatore.sabato@abawebagency.com</field>
+        <field name="lang">it_IT</field>
+        <field name="tz">Europe/Rome</field>
+    </record>
+    <record id="user_salvatore_sabato" model="res.users" context="{'no_reset_password': True}">
+        <field name="login">salvatore.sabato@abawebagency.com</field>
+        <field name="partner_id" ref="partner_salvatore_sabato"/>
+        <field name="create_employee" eval="True"/>
+        <field name="group_ids" eval="[Command.set([ref('base.group_user'), ref('hr_timesheet.group_hr_timesheet_user'), ref('mail.group_mail_notification_type_inbox'), ref('project.group_project_user')])]"/>
+    </record>
+
+    <record id="partner_sofia_annese" model="res.partner">
+        <field name="name">Sofia Annese</field>
+        <field name="email">sofia.annese@abawebagency.com</field>
+        <field name="lang">it_IT</field>
+        <field name="tz">Europe/Rome</field>
+    </record>
+    <record id="user_sofia_annese" model="res.users" context="{'no_reset_password': True}">
+        <field name="login">sofia.annese@abawebagency.com</field>
+        <field name="partner_id" ref="partner_sofia_annese"/>
+        <field name="create_employee" eval="True"/>
+        <field name="group_ids" eval="[Command.set([ref('base.group_user'), ref('hr_timesheet.group_hr_timesheet_user'), ref('mail.group_mail_notification_type_inbox'), ref('project.group_project_user')])]"/>
+    </record>
+
+    <record id="partner_viola_annicchiarico" model="res.partner">
+        <field name="name">Viola Annicchiarico</field>
+        <field name="email">viola.annicchiarico@abawebagency.com</field>
+        <field name="lang">it_IT</field>
+        <field name="tz">Europe/Rome</field>
+    </record>
+    <record id="user_viola_annicchiarico" model="res.users" context="{'no_reset_password': True}">
+        <field name="login">viola.annicchiarico@abawebagency.com</field>
+        <field name="partner_id" ref="partner_viola_annicchiarico"/>
+        <field name="create_employee" eval="True"/>
+        <field name="group_ids" eval="[Command.set([ref('base.group_user'), ref('hr_timesheet.group_hr_timesheet_user'), ref('mail.group_mail_notification_type_inbox'), ref('project.group_project_user')])]"/>
+    </record>
+
+</odoo>

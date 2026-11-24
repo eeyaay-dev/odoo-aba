@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- 2FA mandatory for employees, code by email (Phase 1 task 2) -->
+    <function model="ir.config_parameter" name="set_param" eval="('auth_totp.policy', 'employee_required')"/>
+
+    <!-- Customer account: on invitation only, no free sign-up (Phase 1 task 3) -->
+    <function model="ir.config_parameter" name="set_param" eval="('auth_signup.invitation_scope', 'b2b')"/>
+
+    <!-- Google sign-in (Phase 1 task 3). Google app "Odoo ABA", internal to abawebagency.com. -->
+    <record id="auth_oauth.provider_google" model="auth.oauth.provider">
+        <field name="enabled" eval="True"/>
+        <field name="client_id">788551103225-k25fvu1magugtbuittdubmkl4cduf2vc.apps.googleusercontent.com</field>
+    </record>
+
+    <!-- Google Calendar sync (Phase 1 task 7), same Google app.
+         The client SECRET is not stored here: set it by hand in
+         Settings ▸ Calendar ▸ Google Calendar (it lives in the platform Credentials tab). -->
+    <function model="ir.config_parameter" name="set_param"
+              eval="('google_calendar_client_id', '788551103225-k25fvu1magugtbuittdubmkl4cduf2vc.apps.googleusercontent.com')"/>
+
+</odoo>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- Company identity (source: VIES + abawebagency.com legal notes, 20/11/2026) -->
+    <record id="base.main_company" model="res.company">
+        <field name="name">ABA WEB AGENCY SRL</field>
+        <field name="street">Piazzale Dante Alighieri 2</field>
+        <field name="zip">74121</field>
+        <field name="city">Taranto</field>
+        <field name="state_id" ref="base.state_it_ta"/>
+        <field name="country_id" ref="base.it"/>
+        <field name="vat">IT03428690733</field>
+        <field name="email">info@abawebagency.com</field>
+        <field name="website">http://www.abawebagency.com</field>
+        <field name="logo" type="base64" file="aba_base/static/img/aba-logo-black.png"/>
+
+        <!-- Italian e-invoicing (Company ▸ Electronic Invoicing tab).
+             Share capital + sole shareholder still missing: Odoo needs both or neither. -->
+        <field name="l10n_it_codice_fiscale">03428690733</field>
+        <field name="l10n_it_tax_system">RF01</field>
+        <field name="l10n_it_has_eco_index" eval="True"/>
+        <field name="l10n_it_eco_index_office" ref="base.state_it_ta"/>
+        <field name="l10n_it_eco_index_number">253336</field>
+        <field name="l10n_it_eco_index_liquidation_state">LN</field>
+
+        <!-- Document layout (Phase 1 task 5) -->
+        <field name="paperformat_id" ref="base.paperformat_euro"/>
+        <field name="external_report_layout_id" ref="web.external_layout_standard"/>
+        <field name="layout_background">Blank</field>
+        <field name="font">Lato</field>
+        <field name="primary_color">#000000</field>
+        <field name="secondary_color">#000000</field>
+        <field name="company_details" type="html"><p>ABA WEB AGENCY SRL<br/>
+Piazzale Dante Alighieri 2<br/>
+74121 Taranto TA<br/>
+Italy</p></field>
+        <field name="report_footer" type="html"><p>ABA WEB AGENCY SRL · P.IVA e C.F. 03428690733 · REA TA-253336 · PEC abawebagency@pec.it · info@abawebagency.com · www.abawebagency.com</p></field>
+    </record>
+
+    <!-- New contacts default to Italian (company-level default) -->
+    <function model="ir.default" name="set"
+              eval="('res.partner', 'lang', 'it_IT', False, ref('base.main_company'))"/>
+
+</odoo>
