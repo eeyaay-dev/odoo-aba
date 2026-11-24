@@ -4,6 +4,8 @@
     <!-- Italian must be active BEFORE any record uses lang="it_IT" (partners, users,
          the default contact language). On a fresh database only en_US is active.
          Translations are loaded later, in post_init_hook. -->
-    <function model="res.lang" name="_activate_lang" eval="['it_IT']"/>
+    <!-- _activate_lang is a record method (not @api.model): the first eval item is the
+         record ids, so pass [] and then the language code. -->
+    <function model="res.lang" name="_activate_lang" eval="[[], 'it_IT']"/>
 
 </odoo>
