@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_order_form_aba_sales" model="ir.ui.view">
+        <field name="name">sale.order.form.aba.sales</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//header" position="inside">
+                <field name="aba_discount_blocked" invisible="1"/>
+                <field name="aba_pending_request_id" invisible="1"/>
+                <button name="action_aba_request_discount" type="object" class="btn-primary"
+                        string="Richiedi autorizzazione sconto"
+                        invisible="not aba_discount_blocked or aba_pending_request_id or state not in ('draft', 'sent')"/>
+            </xpath>
+
+            <xpath expr="//header" position="after">
+                <div class="alert alert-danger" role="alert"
+                     invisible="not aba_discount_blocked or aba_pending_request_id">
+                    Sconto su listino del <field name="aba_max_discount_pct" class="oe_inline"/>%: oltre il limite.
+                    Il contratto non può essere finalizzato senza l'autorizzazione di Andrea Basile.
+                </div>
+                <div class="alert alert-warning" role="alert" invisible="not aba_pending_request_id">
+                    Richiesta di autorizzazione sconto inviata: in attesa di approvazione.
+                </div>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_unit']" position="after">
+                <field name="aba_discount_pct" optional="show" readonly="1"/>
+            </xpath>
+
+            <xpath expr="//notebook" position="inside">
+                <page string="Richieste di sconto" name="aba_discount_requests">
+                    <group>
+                        <field name="aba_approved_discount_pct"/>
+                    </group>
+                    <field name="aba_request_ids" readonly="1">
+                        <list>
+                            <field name="name"/>
+                            <field name="requested_by"/>
+                            <field name="max_discount_pct"/>
+                            <field name="state" widget="badge"/>
+                            <field name="decided_by"/>
+                            <field name="decided_on"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

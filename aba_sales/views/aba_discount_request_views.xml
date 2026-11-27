@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="aba_discount_request_view_form" model="ir.ui.view">
+        <field name="name">aba.discount.request.form</field>
+        <field name="model">aba.discount.request</field>
+        <field name="arch" type="xml">
+            <form string="Richiesta di autorizzazione sconto">
+                <header>
+                    <button name="action_submit" string="Invia richiesta" type="object" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_approve" string="Approva" type="object" class="btn-primary"
+                            invisible="state != 'pending'" groups="aba_sales.group_discount_approver"/>
+                    <button name="action_reject" string="Rifiuta" type="object"
+                            invisible="state != 'pending'" groups="aba_sales.group_discount_approver"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,pending,approved"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="order_id" readonly="state != 'draft'"/>
+                            <field name="partner_id"/>
+                            <field name="requested_by"/>
+                        </group>
+                        <group>
+                            <field name="max_discount_pct"/>
+                            <field name="decided_by"/>
+                            <field name="decided_on"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="reason" readonly="state != 'draft'" placeholder="Perché serve questo sconto?"/>
+                        <field name="line_summary"/>
+                        <field name="decision_note" readonly="state != 'pending'"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="aba_discount_request_view_list" model="ir.ui.view">
+        <field name="name">aba.discount.request.list</field>
+        <field name="model">aba.discount.request</field>
+        <field name="arch" type="xml">
+            <list string="Richieste di sconto" decoration-success="state == 'approved'" decoration-danger="state == 'rejected'">
+                <field name="name"/>
+                <field name="order_id"/>
+                <field name="partner_id"/>
+                <field name="requested_by"/>
+                <field name="max_discount_pct"/>
+                <field name="state" widget="badge"/>
+                <field name="decided_by"/>
+                <field name="decided_on"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="aba_discount_request_view_search" model="ir.ui.view">
+        <field name="name">aba.discount.request.search</field>
+        <field name="model">aba.discount.request</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="order_id"/>
+                <field name="partner_id"/>
+                <field name="requested_by"/>
+                <filter name="pending" string="In attesa" domain="[('state', '=', 'pending')]"/>
+                <filter name="approved" string="Approvate" domain="[('state', '=', 'approved')]"/>
+                <filter name="rejected" string="Rifiutate" domain="[('state', '=', 'rejected')]"/>
+                <group>
+                    <filter name="group_state" string="Stato" context="{'group_by': 'state'}"/>
+                    <filter name="group_user" string="Richiedente" context="{'group_by': 'requested_by'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="aba_discount_request_action" model="ir.actions.act_window">
+        <field name="name">Richieste di sconto</field>
+        <field name="res_model">aba.discount.request</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_pending': 1}</field>
+    </record>
+
+    <menuitem id="aba_discount_request_menu" name="Richieste di sconto"
+              parent="sale.sale_order_menu" action="aba_discount_request_action" sequence="50"/>
+
+</odoo>

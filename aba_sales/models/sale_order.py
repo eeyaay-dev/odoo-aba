@@ -1,0 +1,80 @@
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError
+
+from .sale_order_line import EPS
+
+PARAM = "aba_sales.max_discount_pct"
+
+
+class SaleOrder(models.Model):
+    _inherit = "sale.order"
+
+    aba_max_discount_pct = fields.Float(
+        string="Sconto massimo su listino (%)", compute="_compute_aba_discount", digits=(16, 2)
+    )
+    aba_approved_discount_pct = fields.Float(
+        string="Sconto autorizzato (%)", copy=False, readonly=True, digits=(16, 2),
+        help="Highest discount approved for this order. A higher discount needs a new approval.",
+    )
+    aba_discount_blocked = fields.Boolean(
+        string="Sconto da autorizzare", compute="_compute_aba_discount",
+        help="The discount exceeds the limit and is not covered by an approved request.",
+    )
+    aba_request_ids = fields.One2many("aba.discount.request", "order_id", string="Richieste di sconto")
+    aba_pending_request_id = fields.Many2one(
+        "aba.discount.request", compute="_compute_aba_discount", string="Richiesta in attesa"
+    )
+
+    @api.model
+    def _aba_get_max_discount_pct(self):
+        value = self.env["ir.config_parameter"].sudo().get_param(PARAM, "10")
+        try:
+            return float(value)
+        except ValueError:
+            return 10.0
+
+    @api.depends(
+        "order_line.price_unit", "order_line.discount", "order_line.product_id",
+        "aba_approved_discount_pct", "aba_request_ids.state",
+    )
+    def _compute_aba_discount(self):
+        threshold = self._aba_get_max_discount_pct()
+        for order in self:
+            pcts = [line._aba_get_discount_pct() for line in order.order_line]
+            top = max(pcts, default=0.0)
+            order.aba_max_discount_pct = top
+            order.aba_discount_blocked = top > threshold + EPS and top > order.aba_approved_discount_pct + EPS
+            order.aba_pending_request_id = order.aba_request_ids.filtered(lambda r: r.state == "pending")[:1]
+
+    def action_aba_request_discount(self):
+        """Open the request form (the salesperson writes the reason and sends it)."""
+        self.ensure_one()
+        if not self.aba_discount_blocked:
+            raise UserError(_("Nessuna autorizzazione necessaria: lo sconto è entro il limite o già autorizzato."))
+        if self.aba_pending_request_id:
+            raise UserError(_("Esiste già una richiesta in attesa di approvazione."))
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "aba.discount.request",
+            "view_mode": "form",
+            "target": "current",
+            "context": {
+                "default_order_id": self.id,
+                "default_max_discount_pct": self.aba_max_discount_pct,
+            },
+        }
+
+    def action_confirm(self):
+        blocked = self.filtered("aba_discount_blocked")
+        if blocked:
+            threshold = self._aba_get_max_discount_pct()
+            raise UserError(
+                _(
+                    "Impossibile finalizzare il contratto: lo sconto su listino (%(pct).2f%%) supera il limite "
+                    "del %(max).0f%% e non è stato autorizzato.\n"
+                    "Invia una richiesta di autorizzazione: solo Andrea Basile può approvarla.",
+                    pct=max(blocked.mapped("aba_max_discount_pct")),
+                    max=threshold,
+                )
+            )
+        return super().action_confirm()
