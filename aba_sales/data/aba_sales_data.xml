@@ -8,6 +8,17 @@
         <field name="padding">4</field>
     </record>
 
+    <!-- Deposit rule: above the threshold (EUR, VAT excluded) the prepayment is only this percent;
+         up to it the first invoice is in full (company default, 100%). -->
+    <record id="param_deposit_threshold" model="ir.config_parameter">
+        <field name="key">aba_sales.deposit_threshold</field>
+        <field name="value">20000</field>
+    </record>
+    <record id="param_deposit_percent_above" model="ir.config_parameter">
+        <field name="key">aba_sales.deposit_percent_above</field>
+        <field name="value">30</field>
+    </record>
+
     <!-- Maximum discount a salesperson can give without approval (percent of the list price). -->
     <record id="param_max_discount_pct" model="ir.config_parameter">
         <field name="key">aba_sales.max_discount_pct</field>

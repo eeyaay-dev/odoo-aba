@@ -46,6 +46,29 @@ class SaleOrder(models.Model):
             order.aba_discount_blocked = top > threshold + EPS and top > order.aba_approved_discount_pct + EPS
             order.aba_pending_request_id = order.aba_request_ids.filtered(lambda r: r.state == "pending")[:1]
 
+    @api.depends("amount_untaxed")
+    def _compute_prepayment_percent(self):
+        """ABA rule: first invoice in full; above 20,000 EUR (VAT excluded) only a 30% deposit.
+
+        The standard method takes the company default (100%). Both numbers are system
+        parameters: aba_sales.deposit_threshold and aba_sales.deposit_percent_above.
+        """
+        super()._compute_prepayment_percent()
+        threshold, percent = self._aba_get_deposit_rule()
+        for order in self:
+            if order.state in ("draft", "sent") and order.amount_untaxed > threshold:
+                order.prepayment_percent = percent
+
+    @api.model
+    def _aba_get_deposit_rule(self):
+        params = self.env["ir.config_parameter"].sudo()
+        try:
+            threshold = float(params.get_param("aba_sales.deposit_threshold", "20000"))
+            percent = float(params.get_param("aba_sales.deposit_percent_above", "30")) / 100.0
+        except ValueError:
+            threshold, percent = 20000.0, 0.30
+        return threshold, percent
+
     def action_aba_request_discount(self):
         """Open the request form (the salesperson writes the reason and sends it)."""
         self.ensure_one()
