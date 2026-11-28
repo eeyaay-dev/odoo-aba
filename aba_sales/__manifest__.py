@@ -1,6 +1,6 @@
 {
     "name": "ABA Web Agency – Sales rules",
-    "version": "19.0.1.2.1",
+    "version": "19.0.1.2.2",
     "summary": "Catalog managed only by Andrea, 10% discount cap with approval request and audit trail",
     "description": """
 Sales rules requested by ABA Web Agency (Phase 3):

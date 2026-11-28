@@ -50,18 +50,23 @@ class SaleOrder(models.Model):
             order.aba_discount_blocked = top > threshold + EPS and top > order.aba_approved_discount_pct + EPS
             order.aba_pending_request_id = order.aba_request_ids.filtered(lambda r: r.state == "pending")[:1]
 
-    @api.depends("amount_untaxed")
-    def _compute_prepayment_percent(self):
+    def _compute_amounts(self):
         """ABA rule: first invoice in full; above 20,000 EUR (VAT excluded) only a 30% deposit.
 
-        The standard method takes the company default (100%). Both numbers are system
+        Applied when the totals are computed. It is not done in `_compute_prepayment_percent`
+        because that field is precomputed and cannot depend on the (not precomputed) totals.
+        The company default (100%) is kept up to the threshold. Both numbers are system
         parameters: aba_sales.deposit_threshold and aba_sales.deposit_percent_above.
         """
-        super()._compute_prepayment_percent()
+        super()._compute_amounts()
         threshold, percent = self._aba_get_deposit_rule()
         for order in self:
-            if order.state in ("draft", "sent") and order.amount_untaxed > threshold:
+            if order.state not in ("draft", "sent"):
+                continue
+            if order.amount_untaxed > threshold:
                 order.prepayment_percent = percent
+            else:
+                order.prepayment_percent = order.company_id.prepayment_percent
 
     @api.model
     def _aba_get_deposit_rule(self):
