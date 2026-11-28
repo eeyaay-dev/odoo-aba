@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Pro-forma: ABA's own number in the title, plus the "not valid for tax purposes" wording. -->
+    <template id="report_saleorder_document_aba_proforma" inherit_id="sale.report_saleorder_document">
+
+        <xpath expr="//span[@t-field='doc.name']" position="replace">
+            <span t-if="is_proforma" t-out="doc._aba_get_proforma_number()">PF/2026/0001</span>
+            <span t-else="" t-field="doc.name">SO0000</span>
+        </xpath>
+
+        <xpath expr="//div[@id='informations']" position="before">
+            <div t-if="is_proforma" class="mb-3" name="aba_proforma_notice">
+                <strong>Fattura proforma</strong> n. <span t-out="doc._aba_get_proforma_number()">PF/2026/0001</span>
+                <br/>
+                <em>Documento non valido ai fini fiscali.</em>
+            </div>
+        </xpath>
+
+    </template>
+
+</odoo>

@@ -1,6 +1,6 @@
 {
     "name": "ABA Web Agency – Sales rules",
-    "version": "19.0.1.1.0",
+    "version": "19.0.1.2.0",
     "summary": "Catalog managed only by Andrea, 10% discount cap with approval request and audit trail",
     "description": """
 Sales rules requested by ABA Web Agency (Phase 3):
@@ -26,6 +26,7 @@ The threshold is the system parameter aba_sales.max_discount_pct (default 10).
         "data/aba_sales_data.xml",
         "views/aba_discount_request_views.xml",
         "views/sale_order_views.xml",
+        "views/report_proforma.xml",
     ],
     "post_init_hook": "post_init_hook",
     "installable": True,

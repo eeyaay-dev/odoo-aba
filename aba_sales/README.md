@@ -12,6 +12,7 @@ Implements the Phase 3 sales requirements from ABA (message of 2026-11-26):
 | Authorization request sent from the system | Button **Richiedi autorizzazione sconto** on the order, then **Invia richiesta** on the request. |
 | Only Andrea approves or rejects | Group **ABA / Approvatore sconti** (buttons and Python check). Approving unlocks the order up to the approved percentage. A higher discount needs a new request. |
 | First invoice in full; above 20,000 € a 30% deposit | The order's *Prepayment percentage* is 100% up to 20,000 € (VAT excluded) and 30% above it. Parameters `aba_sales.deposit_threshold` and `aba_sales.deposit_percent_above`. It applies to the online payment and to the deposit invoice. |
+| Pro-forma with its own number and wording | Sending or printing a pro-forma assigns ABA's number (`PF/2026/0001`, restarts every year) once, and the PDF shows "Documento non valido ai fini fiscali". The quotation PDF is unchanged. |
 | Everything traced | Chatter on the request and on the order, one activity for each approver, and the *Richieste di sconto* menu under Sales ▸ Orders. |
 
 ## Settings

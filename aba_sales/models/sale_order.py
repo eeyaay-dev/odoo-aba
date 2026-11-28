@@ -20,6 +20,10 @@ class SaleOrder(models.Model):
         string="Sconto da autorizzare", compute="_compute_aba_discount",
         help="The discount exceeds the limit and is not covered by an approved request.",
     )
+    aba_proforma_number = fields.Char(
+        string="Numero proforma", copy=False, readonly=True,
+        help="ABA's own pro-forma number (PF/year/0001). Assigned the first time a pro-forma is issued.",
+    )
     aba_request_ids = fields.One2many("aba.discount.request", "order_id", string="Richieste di sconto")
     aba_pending_request_id = fields.Many2one(
         "aba.discount.request", compute="_compute_aba_discount", string="Richiesta in attesa"
@@ -68,6 +72,24 @@ class SaleOrder(models.Model):
         except ValueError:
             threshold, percent = 20000.0, 0.30
         return threshold, percent
+
+    def _aba_get_proforma_number(self):
+        """Return the ABA pro-forma number, assigning it on first use.
+
+        The standard pro-forma only shows the quotation reference (S00042). ABA wants its own
+        numbering. It is assigned once, so re-sending the same pro-forma keeps the same number.
+        """
+        self.ensure_one()
+        if not self.aba_proforma_number:
+            number = self.env["ir.sequence"].sudo().next_by_code("aba.proforma")
+            self.sudo().aba_proforma_number = number
+        return self.aba_proforma_number
+
+    def action_quotation_send(self):
+        if self.env.context.get("proforma"):
+            for order in self:
+                order._aba_get_proforma_number()
+        return super().action_quotation_send()
 
     def action_aba_request_discount(self):
         """Open the request form (the salesperson writes the reason and sends it)."""

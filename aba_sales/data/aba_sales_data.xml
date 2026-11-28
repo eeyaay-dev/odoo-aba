@@ -8,6 +8,15 @@
         <field name="padding">4</field>
     </record>
 
+    <!-- ABA pro-forma numbering: PF/2026/0001, restarting every year. -->
+    <record id="seq_aba_proforma" model="ir.sequence">
+        <field name="name">ABA – Numerazione proforma</field>
+        <field name="code">aba.proforma</field>
+        <field name="prefix">PF/%(range_year)s/</field>
+        <field name="padding">4</field>
+        <field name="use_date_range" eval="True"/>
+    </record>
+
     <!-- Deposit rule: above the threshold (EUR, VAT excluded) the prepayment is only this percent;
          up to it the first invoice is in full (company default, 100%). -->
     <record id="param_deposit_threshold" model="ir.config_parameter">
