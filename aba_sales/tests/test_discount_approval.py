@@ -115,3 +115,10 @@ class TestDiscountApproval(AbaSalesCommon):
         })
         request.action_submit()
         self.assertIn(self.andrea, request.sudo().activity_ids.mapped("user_id"))
+
+    def test_demo_data_installation_is_never_blocked(self):
+        """Odoo's demo data confirms orders with huge discounts; that must keep working."""
+        order = self._order(discount=96.25)
+        self.assertTrue(order.aba_discount_blocked)
+        order.with_context(install_demo=True).action_confirm()
+        self.assertEqual(order.state, "sale")

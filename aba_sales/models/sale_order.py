@@ -110,6 +110,9 @@ class SaleOrder(models.Model):
         }
 
     def action_confirm(self):
+        # Odoo's own demo data confirms orders with big discounts: never block while installing data.
+        if self.env.context.get("install_demo") or self.env.context.get("install_mode"):
+            return super().action_confirm()
         blocked = self.filtered("aba_discount_blocked")
         if blocked:
             threshold = self._aba_get_max_discount_pct()
